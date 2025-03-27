@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>R学習ロードマップ：基本編</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 20px;
+        padding: 20px;
+        border: 2px solid #4caf50;
+        border-radius: 10px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #4caf50;
+      }
+      code {
+        background-color: #e8f5e9;
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .code-block {
+        background-color: #eef;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>R学習ロードマップ：基本編 (1日集中)</h1>
+    <p>目標：Rの環境構築と基本操作、データの基礎をマスターする</p>
+
+    <div class="section">
+      <h2>1. 環境構築</h2>
+      <h3>✅ RとRStudioのインストール</h3>
+      <p>以下の手順でRとRStudioをインストールします。</p>
+      <ol>
+        <li>
+          <a href="https://cran.r-project.org/" target="_blank">CRAN</a>
+          からR本体をインストール
+        </li>
+        <li>
+          <a href="https://posit.co/download/rstudio-desktop/" target="_blank"
+            >RStudio</a
+          >
+          をインストール
+        </li>
+        <li>RStudioを起動して以下のコードが動作するか確認</li>
+      </ol>
+      <div class="code-block">print("Hello, R!")</div>
+
+      <h3>✅ オンライン環境の活用</h3>
+      <p>以下のオンラインR環境で、インストール不要でRを実行できます。</p>
+      <ul>
+        <li>
+          <a href="https://codapi.org/r/" target="_blank"
+            >Codapi R Playground</a
+          >
+        </li>
+        <li>
+          <a href="https://programiz.pro/ide/r/" target="_blank"
+            >Programiz R IDE</a
+          >
+        </li>
+        <li><a href="https://posit.cloud/" target="_blank">Posit Cloud</a></li>
+      </ul>
+
+      <h3>✅ Google ColabでRを使う</h3>
+      <div class="code-block">
+        %load_ext rpy2.ipython %%R print("Hello from R in Colab!")
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. Rの基本操作</h2>
+      <h3>✅ 変数の作成と計算</h3>
+      <div class="code-block">
+        x &lt;- 10 y &lt;- 20 z &lt;- x + y print(z) # 四則演算 a &lt;- x * y b
+        &lt;- y / x c &lt;- y %% x # 剰余 d &lt;- y %/% x # 整数除算 print(c(a,
+        b, c, d))
+      </div>
+
+      <h3>✅ データ型の確認</h3>
+      <div class="code-block">
+        num &lt;- 10 str &lt;- "R言語" bool &lt;- TRUE vec &lt;- c(1, 2, 3)
+        list_obj &lt;- list(x, str, bool) print(class(num)) print(class(str))
+        print(class(bool)) print(class(vec)) print(class(list_obj))
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. 制御構文</h2>
+      <h3>✅ ifelse() の活用</h3>
+      <div class="code-block">
+        scores &lt;- c(80, 45, 90, 30, 75) results &lt;- ifelse(scores &gt;= 50,
+        "合格", "不合格") print(results)
+      </div>
+
+      <h3>✅ forループ</h3>
+      <div class="code-block">for (i in 1:5) { print(paste("回数:", i)) }</div>
+
+      <h3>✅ whileループ</h3>
+      <div class="code-block">
+        count &lt;- 1 while (count &lt;= 5) { print(paste("カウント:", count))
+        count &lt;- count + 1 }
+      </div>
+
+      <h3>✅ switch() の活用</h3>
+      <div class="code-block">
+        option &lt;- "B" result &lt;- switch(option, "A" = "選択肢 A", "B" =
+        "選択肢 B", "C" = "選択肢 C", "不明な選択肢") print(result)
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. 標準データセットの活用</h2>
+      <h3>✅ iris データセット</h3>
+      <div class="code-block">head(iris) summary(iris)</div>
+
+      <h3>✅ データの加工例</h3>
+      <div class="code-block">
+        library(dplyr) iris %&gt;% filter(Sepal.Length &gt; 5) %&gt;%
+        mutate(Size = ifelse(Sepal.Length &gt;= 6, "大", "小")) %&gt;% head(10)
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>5. 演習問題 (基本編)</h2>
+      <ul>
+        <li>
+          `iris` データセットの `Sepal.Length` が5より大きいデータのみ表示
+        </li>
+        <li>
+          `ifelse()` で `mtcars` の `mpg`
+          が20以上なら「良好」、未満なら「改善」と表示
+        </li>
+        <li>`for` ループで 1〜5 までの数字を表示</li>
+        <li>`switch()` で「A」「B」「C」の選択肢に応じたメッセージを出力</li>
+        <li>
+          `try()` を用いて `log("a")`
+          のエラーをキャッチし、「エラーが発生しました。」と表示
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>6. 学習のポイント</h2>
+      <ul>
+        <li>毎日コードを書く</li>
+        <li>
+          標準データセット (`iris`, `mtcars` など) で多くの関数を試してみる
+        </li>
+        <li>エラーが出ても冷静に原因を探る</li>
+      </ul>
+    </div>
+
+    <p>
+      <strong>次のステップ：</strong> 次は
+      <strong><a href="step2.html">応用編</a></strong> に進み、`tidyverse` や
+      `ggplot2` を活用したデータ加工や可視化を学びましょう。
+    </p>
+  </body>
+</html>

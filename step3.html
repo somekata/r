@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>R学習ロードマップ：発展編</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 20px;
+        padding: 20px;
+        border: 2px solid #ff9800;
+        border-radius: 10px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #ff9800;
+      }
+      code {
+        background-color: #fff3e0;
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .code-block {
+        background-color: #eef;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>R学習ロードマップ：発展編 (7日集中)</h1>
+    <p>
+      目標：統計解析、データの前処理、可視化、機械学習などの高度なスキルを習得する
+    </p>
+
+    <div class="section">
+      <h2>1. 統計解析</h2>
+      <h3>✅ 基本統計量の計算</h3>
+      <div class="code-block">
+        # 平均値・中央値・最頻値<br />
+        mean(iris$Sepal.Length)<br />
+        median(iris$Sepal.Length) # 最頻値
+        (modeはRには標準機能がないため、関数を自作)<br />
+        get_mode &lt;- function(v) {<br />
+        uniq_vals &lt;- unique(v)<br />
+        uniq_vals[which.max(tabulate(match(v, uniq_vals)))]<br />
+        }<br />
+        get_mode(iris$Species)
+      </div>
+
+      <h3>✅ t検定</h3>
+      <div class="code-block">
+        # 2群の平均値の差の検定<br />
+        t.test(iris$Sepal.Length ~ iris$Species)
+      </div>
+
+      <h3>✅ カイ二乗検定 (χ²検定)</h3>
+      <div class="code-block">
+        # カイ二乗検定<br />
+        tbl &lt;- table(iris$Species)<br />
+        chisq.test(tbl)
+      </div>
+
+      <h3>✅ 分散分析 (ANOVA)</h3>
+      <div class="code-block">
+        # 3群の平均値の差の検定<br />
+        anova_model &lt;- aov(Sepal.Length ~ Species, data = iris)<br />
+        summary(anova_model)
+      </div>
+
+      <h3>✅ 回帰分析</h3>
+      <div class="code-block">
+        # 単回帰分析 (線形回帰)<br />
+        lm_model &lt;- lm(mpg ~ hp, data = mtcars)<br />
+        summary(lm_model)
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. データの前処理</h2>
+      <h3>✅ 欠損値の処理</h3>
+      <div class="code-block">
+        # 欠損値の確認<br />
+        sum(is.na(iris)) # 欠損値の補完<br />
+        iris_clean &lt;- iris %&gt;%<br />
+        mutate(Sepal.Length = ifelse(is.na(Sepal.Length), mean(Sepal.Length,
+        na.rm = TRUE), Sepal.Length))
+      </div>
+
+      <h3>✅ 外れ値の検出と除去</h3>
+      <div class="code-block">
+        # 箱ひげ図で外れ値を確認<br />
+        boxplot(iris$Sepal.Length, main = "Sepal Length") # 外れ値の除去<br />
+        iris_no_outlier &lt;- iris %&gt;%<br />
+        filter(Sepal.Length &lt; quantile(Sepal.Length, 0.95))
+      </div>
+
+      <h3>✅ データの正規化 (Normalization)</h3>
+      <div class="code-block">
+        # Min-Max 正規化<br />
+        iris_normalized &lt;- iris %&gt;%<br />
+        mutate(Sepal.Length = (Sepal.Length - min(Sepal.Length)) /
+        (max(Sepal.Length) - min(Sepal.Length)))
+      </div>
+
+      <h3>✅ データの標準化 (Standardization)</h3>
+      <div class="code-block">
+        # Zスコア標準化<br />
+        iris_standardized &lt;- iris %&gt;%<br />
+        mutate(Sepal.Length = scale(Sepal.Length))
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. データの可視化 (高度な ggplot2)</h2>
+      <h3>✅ 散布図 + 回帰線</h3>
+      <div class="code-block">
+        ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +<br />
+        geom_point() +<br />
+        geom_smooth(method = "lm", color = "red")
+      </div>
+
+      <h3>✅ ファセット (Faceting)</h3>
+      <div class="code-block">
+        ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +<br />
+        geom_point() +<br />
+        facet_wrap(~ Species)
+      </div>
+
+      <h3>✅ ヒートマップ</h3>
+      <div class="code-block">
+        library(reshape2)<br />
+        corr_matrix &lt;- cor(mtcars)<br />
+        melted_corr &lt;- melt(corr_matrix) ggplot(data = melted_corr, aes(x =
+        Var1, y = Var2, fill = value)) +<br />
+        geom_tile()
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. 次元削減 (PCA, t-SNE, UMAP)</h2>
+      <h3>✅ PCA (主成分分析)</h3>
+      <div class="code-block">
+        pca_result &lt;- prcomp(iris[, 1:4], scale = TRUE)<br />
+        summary(pca_result)
+      </div>
+
+      <h3>✅ t-SNE</h3>
+      <div class="code-block">
+        library(Rtsne)<br />
+        tsne_result &lt;- Rtsne(as.matrix(iris[, 1:4]))<br />
+        tsne_data &lt;- data.frame(tsne_result$Y, Species = iris$Species)
+        ggplot(tsne_data, aes(x = X1, y = X2, color = Species)) +<br />
+        geom_point()
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>5. 演習問題 (発展編)</h2>
+      <ul>
+        <li>
+          `iris` データセットの `Sepal.Length` の平均値、中央値、最大値を計算
+        </li>
+        <li>
+          `mtcars` データセットを用いて `hp` と `mpg`
+          の回帰分析を実施し、回帰線を可視化する
+        </li>
+        <li>
+          `iris` データセットの `Sepal.Length` の欠損値を `mean()` を用いて補完
+        </li>
+        <li>`iris` データセットの `PCA` を行い、散布図を作成</li>
+        <li>
+          サンプルの `time_series` データの折れ線グラフを `ggplot2` で可視化
+        </li>
+      </ul>
+    </div>
+
+    <p>
+      <strong>次のステップ：</strong> 次は
+      <strong><a href="step4.html">プロ編</a></strong> に進み、`Shiny`、`R
+      Markdown`、機械学習などの応用スキルを学びましょう。
+    </p>
+  </body>
+</html>

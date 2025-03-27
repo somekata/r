@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>R学習ロードマップ：応用編</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 20px;
+        padding: 20px;
+        border: 2px solid #2196f3;
+        border-radius: 10px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2196f3;
+      }
+      code {
+        background-color: #e3f2fd;
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      .code-block {
+        background-color: #eef;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>R学習ロードマップ：応用編 (2日集中)</h1>
+    <p>目標：データの加工と可視化、分析の実践力を身につける</p>
+
+    <div class="section">
+      <h2>1. データ操作の基礎 (dplyr)</h2>
+      <h3>✅ dplyrのインストールとロード</h3>
+      <div class="code-block">
+        install.packages("tidyverse")<br />
+        library(dplyr)
+      </div>
+
+      <h3>✅ filter() の活用</h3>
+      <div class="code-block">
+        # 'iris' データセットから 'Sepal.Length' が 5 以上のデータのみ抽出<br />
+        iris %&gt;%<br />
+        filter(Sepal.Length &gt;= 5)
+      </div>
+
+      <h3>✅ select() の活用</h3>
+      <div class="code-block">
+        # 'iris' データセットから 'Sepal.Length' と 'Species' のみ選択<br />
+        iris %&gt;%<br />
+        select(Sepal.Length, Species)
+      </div>
+
+      <h3>✅ mutate() の活用</h3>
+      <div class="code-block">
+        # 'Sepal.Length' が 5以上なら「大」、未満なら「小」を追加<br />
+        iris %&gt;%<br />
+        mutate(Size = ifelse(Sepal.Length &gt;= 5, "大", "小"))
+      </div>
+
+      <h3>✅ arrange() の活用</h3>
+      <div class="code-block">
+        # 'iris' データセットを 'Sepal.Length' の降順に並べ替え<br />
+        iris %&gt;%<br />
+        arrange(desc(Sepal.Length))
+      </div>
+
+      <h3>✅ summarise() の活用</h3>
+      <div class="code-block">
+        # 'iris' データセットの 'Sepal.Length' の平均値と最大値<br />
+        iris %&gt;%<br />
+        summarise(<br />
+        mean_sepal = mean(Sepal.Length),<br />
+        max_sepal = max(Sepal.Length)<br />
+        )
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. データ可視化の基礎 (ggplot2)</h2>
+      <h3>✅ ggplot2のインストールとロード</h3>
+      <div class="code-block">library(ggplot2)</div>
+
+      <h3>✅ 散布図の作成</h3>
+      <div class="code-block">
+        ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +<br />
+        geom_point()
+      </div>
+
+      <h3>✅ 色分けとテーマの追加</h3>
+      <div class="code-block">
+        ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color =
+        Species)) +<br />
+        geom_point() +<br />
+        theme_minimal()
+      </div>
+
+      <h3>✅ 箱ひげ図 (Boxplot)</h3>
+      <div class="code-block">
+        ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +<br />
+        geom_boxplot()
+      </div>
+
+      <h3>✅ ヒストグラム</h3>
+      <div class="code-block">
+        ggplot(data = iris, aes(x = Sepal.Length)) +<br />
+        geom_histogram(binwidth = 0.5, fill = "blue", color = "black")
+      </div>
+
+      <h3>✅ 折れ線グラフ</h3>
+      <div class="code-block">
+        ggplot(data = mtcars, aes(x = mpg, y = hp)) +<br />
+        geom_line()
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. データの読み込み (readr)</h2>
+      <h3>✅ CSVデータの読み込み</h3>
+      <div class="code-block">
+        library(readr)<br />
+        data &lt;- read_csv("sample_data.csv")<br />
+        head(data)
+      </div>
+
+      <h3>✅ データのエクスポート</h3>
+      <div class="code-block">write_csv(data, "exported_data.csv")</div>
+    </div>
+
+    <div class="section">
+      <h2>4. ダミーデータの作成</h2>
+      <h3>✅ tibble() の活用</h3>
+      <div class="code-block">
+        library(tibble)<br />
+        dummy_data &lt;- tibble(<br />
+        ID = 1:10,<br />
+        Age = sample(20:60, 10, replace = TRUE),<br />
+        Score = sample(50:100, 10, replace = TRUE)<br />
+        )<br />
+        print(dummy_data)
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>5. 演習問題 (応用編)</h2>
+      <ul>
+        <li>
+          `iris` データセットの `Sepal.Length` が 5 以上のデータのみを抽出
+        </li>
+        <li>
+          `mtcars` データセットから `mpg`, `hp`, `gear` の3列を選択し、`gear`
+          別に降順に並べ替え
+        </li>
+        <li>
+          `ggplot2` で `iris` データセットの「花びらの幅 vs
+          花びらの長さ」の散布図に回帰線を追加
+        </li>
+        <li>
+          `dummy_data` を作成し、`mutate()` で `Grade` 列を作成 (例: `Score`
+          が80以上なら「A」、それ未満なら「B」)
+        </li>
+        <li>
+          `read_csv()` でCSVファイルを読み込み、`filter()` を使って `Age`
+          が30以上のデータのみ抽出
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>6. 学習のポイント</h2>
+      <ul>
+        <li>データの流れを意識する</li>
+        <li>ggplot2 での色分けやテーマの活用</li>
+        <li>サンプルデータで実践し、手を動かす</li>
+      </ul>
+    </div>
+
+    <p>
+      <strong>次のステップ：</strong> 次は
+      <strong><a href="step3.html">発展編</a></strong>
+      に進み、統計解析、欠損値処理、機械学習などを学びましょう。
+    </p>
+  </body>
+</html>
