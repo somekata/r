@@ -86,53 +86,85 @@
     <div class="section">
       <h2>2. Rの基本操作</h2>
       <h3>✅ 変数の作成と計算</h3>
+      <!-- prettier-ignore -->
       <div class="code-block">
-        x &lt;- 10 y &lt;- 20 z &lt;- x + y print(z) # 四則演算 a &lt;- x * y b
-        &lt;- y / x c &lt;- y %% x # 剰余 d &lt;- y %/% x # 整数除算 print(c(a,
-        b, c, d))
+        x &lt;- 10
+        y &lt;- 20 
+        z &lt;- x + y 
+        print(z) # 四則演算 
+        a &lt;- x * y
+        b &lt;- y / x
+        c &lt;- y %% x # 剰余 
+        d &lt;- y %/% x # 整数除算 
+        print(c(a, b, c, d))
       </div>
 
       <h3>✅ データ型の確認</h3>
+      <!-- prettier-ignore -->
       <div class="code-block">
-        num &lt;- 10 str &lt;- "R言語" bool &lt;- TRUE vec &lt;- c(1, 2, 3)
-        list_obj &lt;- list(x, str, bool) print(class(num)) print(class(str))
-        print(class(bool)) print(class(vec)) print(class(list_obj))
+        num &lt;- 10 
+        str &lt;- "R言語" 
+        bool &lt;- TRUE 
+        vec &lt;- c(1, 2, 3)
+        list_obj &lt;- list(x, str, bool) 
+        print(class(num)) 
+        print(class(str))
+        print(class(bool)) 
+        print(class(vec)) 
+        print(class(list_obj))
       </div>
     </div>
 
     <div class="section">
       <h2>3. 制御構文</h2>
+
       <h3>✅ ifelse() の活用</h3>
+      <!-- prettier-ignore -->
       <div class="code-block">
-        scores &lt;- c(80, 45, 90, 30, 75) results &lt;- ifelse(scores &gt;= 50,
-        "合格", "不合格") print(results)
+        scores &lt;- c(80, 45, 90, 30, 75) 
+        results &lt;- ifelse(scores &gt;= 50, "合格", "不合格") 
+        print(results)
       </div>
 
       <h3>✅ forループ</h3>
-      <div class="code-block">for (i in 1:5) { print(paste("回数:", i)) }</div>
+      <!-- prettier-ignore -->
+      <div class="code-block">
+        for (i in 1:5) { print(paste("回数:", i)) }
+      </div>
 
       <h3>✅ whileループ</h3>
+      <!-- prettier-ignore -->
       <div class="code-block">
-        count &lt;- 1 while (count &lt;= 5) { print(paste("カウント:", count))
-        count &lt;- count + 1 }
+        count &lt;- 1 while (count &lt;= 5) { 
+          print(paste("カウント:", count))
+          count &lt;- count + 1 }
       </div>
 
       <h3>✅ switch() の活用</h3>
+      <!-- prettier-ignore -->
       <div class="code-block">
-        option &lt;- "B" result &lt;- switch(option, "A" = "選択肢 A", "B" =
-        "選択肢 B", "C" = "選択肢 C", "不明な選択肢") print(result)
+        option &lt;- "B" 
+        result &lt;- switch(option, "A" = "選択肢 A", "B" = "選択肢 B", "C" = "選択肢 C", "不明な選択肢") 
+        print(result)
       </div>
     </div>
 
     <div class="section">
       <h2>4. 標準データセットの活用</h2>
       <h3>✅ iris データセット</h3>
-      <div class="code-block">head(iris) summary(iris)</div>
+      <!-- prettier-ignore -->
+      <div class="code-block">
+        head(iris) summary(iris)
+      </div>
 
       <h3>✅ データの加工例</h3>
+      <!-- prettier-ignore -->
       <div class="code-block">
-        library(dplyr) iris %&gt;% filter(Sepal.Length &gt; 5) %&gt;%
-        mutate(Size = ifelse(Sepal.Length &gt;= 6, "大", "小")) %&gt;% head(10)
+        library(dplyr) 
+        iris %&gt;% 
+          filter(Sepal.Length &gt; 5) %&gt;%
+          mutate(Size = ifelse(Sepal.Length &gt;= 6, "大", "小")) %&gt;% 
+          head(10)
       </div>
     </div>
 
